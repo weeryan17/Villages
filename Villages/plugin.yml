@@ -1,0 +1,8 @@
+name: Villages
+main: com.weeryan17.vgs.Main
+version: 0.0.0
+commands:
+  Villages:
+    description: Test Command
+  V:
+    description: Same thing as /villages
