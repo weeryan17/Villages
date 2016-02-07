@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
 	   }
 	   
 	   private void saveConfigs(String name, String subFolder){
-		   final File config = new File(getDataFolder() + "\\" + subFolder, name + ".yml");
+		   final File config = new File(getDataFolder() + "'\'" + subFolder, name + ".yml");
 		   try {
 	            this.getConfig().options().copyDefaults(true);
 	            this.config(name, null).save(config);

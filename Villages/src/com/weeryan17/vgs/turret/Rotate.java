@@ -13,8 +13,8 @@ public class Rotate {
 	}
 	public void pantoAngle(String village, int turret, double angle){
 		//angle is supposed to be in radians
-		int x = this.instance.getTurretConfig(village).getInt("Turret " + turret + "." + "centerBlock" + ".x");
-		int z = this.instance.getTurretConfig(village).getInt("Turret " + turret + "." + "centerBlcok" + ".z");
+		int x = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".x");
+		int z = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlcok" + ".z");
 		World world = (World) this.instance.getTurretConfig(village).get("Turret " + turret + "." + "centerBlcok" + ".world");
 		Float angleF = (float) angle;
 		
