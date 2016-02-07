@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.weeryan17.vgs.commands.VillageCommand;
+import com.weeryan17.vgs.turret.TurretPlacer;
 
 public class Main extends JavaPlugin {
 	
@@ -19,6 +21,8 @@ public class Main extends JavaPlugin {
 	public void onEnable(){
 		plugin = this;
 		VillageCommand mainCommand = new VillageCommand();
+		TurretPlacer turret = new TurretPlacer(plugin);
+		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
 	}
