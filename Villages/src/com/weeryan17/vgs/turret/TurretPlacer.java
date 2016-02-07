@@ -48,15 +48,15 @@ public class TurretPlacer implements Listener {
 				//int topRightx = x + 1;
 				//int topRighty = y + 3;
 				//int topRightz = z + 1;
-				String turret;
+				int turret;
 				ConfigurationSection section = this.instance.getTurretConfig(name).getConfigurationSection("Turret.");
 				if(!(section == null)){
 					for(String key : section.getKeys(false)){
 						list.add(key);
 					}
-					turret = "turret" + list.size() + 1;
+					turret = list.size() + 1;
 				} else {
-					turret = "turret1";
+					turret = 1;
 				}
 				
 				//Stand 1 creator
@@ -65,7 +65,7 @@ public class TurretPlacer implements Listener {
 				stand1.setHelmet(obsidian);
 				stand1.setGravity(false);
 				stand1.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand1", stand1);
+				this.instance.storeArmorStand(stand1, name, 1, turret);
 				
 				//Stand 2 creator
 				Location stand2loc = new Location(world, x + .5, y - 1.8, z - 1);
@@ -75,7 +75,7 @@ public class TurretPlacer implements Listener {
 				stand2.setHeadPose(angle2);
 				stand2.setGravity(false);
 				stand2.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand2", stand2);
+				this.instance.storeArmorStand(stand2, name, 2, turret);
 				
 				//Stand 3 creator
 				Location stand3loc = new Location(world, x + .5, y - 1.2, z -1.3);
@@ -83,7 +83,7 @@ public class TurretPlacer implements Listener {
 				stand3.setHelmet(obsidian);
 				stand3.setGravity(false);
 				stand3.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand3", stand3);
+				this.instance.storeArmorStand(stand3, name, 3, turret);
 				
 				//Stand 4 creator
 				Location stand4loc = new Location(world, x + .5, y - 1.4, z - .9);
@@ -93,7 +93,7 @@ public class TurretPlacer implements Listener {
 				stand4.setHeadPose(angle4);
 				stand4.setGravity(false);
 				stand4.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand4", stand4);
+				this.instance.storeArmorStand(stand4, name, 4, turret);
 				
 				//Stand 5 creator
 				Location stand5loc = new Location(world, x + .5, y + 1.3, z - 1.3);
@@ -103,7 +103,7 @@ public class TurretPlacer implements Listener {
 				stand5.setHeadPose(angle5);
 				stand5.setGravity(false);
 				stand5.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand5", stand5);
+				this.instance.storeArmorStand(stand5, name, 5, turret);
 				
 				//Stand 6 creator. It has glass!
 				Location stand6loc = new Location(world, x + .5, y - .2, z -1.3);
@@ -112,7 +112,7 @@ public class TurretPlacer implements Listener {
 				stand6.setHelmet(glass);
 				stand6.setGravity(false);
 				stand6.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand6", stand6);
+				this.instance.storeArmorStand(stand6, name, 6, turret);
 				
 				//Stand 7 creator
 				Location stand7loc = new Location(world, x + .5, y + .9, z -1.3);
@@ -120,7 +120,7 @@ public class TurretPlacer implements Listener {
 				stand7.setHelmet(obsidian);
 				stand7.setGravity(false);
 				stand7.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand7", stand7);
+				this.instance.storeArmorStand(stand7, name, 7, turret);
 				
 				//Stand 8 creator
 				Location stand8loc = new Location(world, x + .5, y + 1.6, z - 1);
@@ -130,7 +130,7 @@ public class TurretPlacer implements Listener {
 				stand8.setHeadPose(angle8);
 				stand8.setGravity(false);
 				stand8.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand8", stand8);
+				this.instance.storeArmorStand(stand8, name, 8, turret);
 				
 				//Stand 9 creator
 				Location stand9loc = new Location(world, x + .5, y + .4, z -1.3);
@@ -138,7 +138,7 @@ public class TurretPlacer implements Listener {
 				stand9.setHelmet(obsidian);
 				stand9.setGravity(false);
 				stand9.setVisible(false);
-				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "stand9", stand9);
+				this.instance.storeArmorStand(stand9, name, 9, turret);
 				
 				//Crystal creator
 				Location crystalLoc = new Location(world, x + .5, y + .6, z + .5);
@@ -188,6 +188,9 @@ public class TurretPlacer implements Listener {
 				Location locBlock8 = new Location(world, x + 1, y + 1, z - 1);
 				Block block8 = locBlock8.getBlock();
 				block8.setType(Material.BARRIER);
+				
+				//Save the config
+				this.instance.saveTurretConfig(name);
 			}
 		}
 	}

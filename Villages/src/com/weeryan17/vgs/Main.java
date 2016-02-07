@@ -3,13 +3,21 @@ package com.weeryan17.vgs;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.EulerAngle;
 
 import com.weeryan17.vgs.commands.VillageCommand;
 import com.weeryan17.vgs.turret.TurretPlacer;
@@ -25,6 +33,10 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
+	}
+	
+	public void onDisable(){
+		
 	}
 	
 	
@@ -44,11 +56,11 @@ public class Main extends JavaPlugin {
 	   }
 	   
 	   private void saveConfigs(String name, String subFolder){
-		   final File config = new File(getDataFolder() + "'\'" + subFolder, name + ".yml");
+		   final File config = new File(getDataFolder() + "\\" + subFolder, name + ".yml");
 		   try {
 	            this.getConfig().options().copyDefaults(true);
-	            this.config(name, null).save(config);
-	            this.config(name, null);
+	            this.config(name, subFolder).save(config);
+	            this.config(name, subFolder);
 		   } catch (IOException ex) {
 	            getLogger().log(Level.WARNING, "Couldn''t save {0}.yml", name);
 	        }
@@ -58,5 +70,36 @@ public class Main extends JavaPlugin {
 	   }
 	   public void saveTurretConfig(String village){
 		   this.saveConfigs("turrets", village);
+	   }
+	   public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber){
+		   double x = stand.getLocation().getX();
+		   double y = stand.getLocation().getY();
+		   double z = stand.getLocation().getZ();
+		   String world = stand.getWorld().toString();
+		   ItemStack item = stand.getHelmet();
+		   String material = item.getType().toString();
+		   EulerAngle angle = stand.getHeadPose();
+		   double yAngle = angle.getY();
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".World", world);
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".x", x);
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".y", y);
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".z", z);
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".yAngle", yAngle);
+		   this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".Material", material);
+	   }
+	   public ArmorStand getArmorStand(String village, int standNumber, int turretNumber){
+		   World world = (World) this.getTurretConfig(village).get("Turret.turret" + turretNumber + ".stand" + standNumber + ".World");
+		   double x = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".x");
+		   double y = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".y");
+		   double z = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".z");
+		   Location loc = new Location(world, x, y, z);
+		   List<Entity> standList = loc.getWorld().getEntities();
+		   ArmorStand stand = null;
+		   for(Entity e : standList){
+			   if(e.getType() == EntityType.ARMOR_STAND){
+				   stand = (ArmorStand) e;
+			   }
+		   }
+		   return stand;
 	   }
 }
