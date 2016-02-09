@@ -71,6 +71,12 @@ public class Main extends JavaPlugin {
 	   public void saveTurretConfig(String village){
 		   this.saveConfigs("turrets", village);
 	   }
+	   public void saveVillageListConfig(){
+		   this.saveConfigs("village", null);
+	   }
+	   public FileConfiguration getVillageListConfig(){
+		   return this.config("village", null);
+	   }
 	   public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber){
 		   double x = stand.getLocation().getX();
 		   double y = stand.getLocation().getY();

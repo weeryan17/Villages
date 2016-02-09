@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
@@ -193,5 +194,10 @@ public class TurretPlacer implements Listener {
 				this.instance.saveTurretConfig(name);
 			}
 		}
+	}
+	public void onJoinTemp(PlayerJoinEvent event){
+		String p = event.getPlayer().getName();
+		this.instance.getVillageListConfig().set("Players.", p);
+		this.instance.saveVillageListConfig();
 	}
 }
