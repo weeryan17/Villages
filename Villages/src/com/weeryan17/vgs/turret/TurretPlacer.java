@@ -146,7 +146,9 @@ public class TurretPlacer implements Listener {
 				crystalLoc.getWorld().spawnEntity(crystalLoc, EntityType.ENDER_CRYSTAL);
 				
 				//center cord storing
+				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "centerBlock" + ".world", world.toString());
 				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "centerBlock" + ".x", x);
+				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "centerBlock" + ".y", y);
 				this.instance.getTurretConfig(name).set("Turret." + turret + "." + "centerBlock" + ".z", z);
 				
 				//Placing barriers
@@ -197,7 +199,7 @@ public class TurretPlacer implements Listener {
 	}
 	public void onJoinTemp(PlayerJoinEvent event){
 		String p = event.getPlayer().getName();
-		this.instance.getVillageListConfig().set("Players.", p);
+		this.instance.getVillageListConfig().set("Villages.", p);
 		this.instance.saveVillageListConfig();
 	}
 }

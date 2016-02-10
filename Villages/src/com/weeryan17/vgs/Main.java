@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.EulerAngle;
 
 import com.weeryan17.vgs.commands.VillageCommand;
+import com.weeryan17.vgs.turret.PlayerFinder;
 import com.weeryan17.vgs.turret.TurretPlacer;
 
 public class Main extends JavaPlugin {
@@ -33,6 +34,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new PlayerFinder(plugin), 0L, 10L);
 	}
 	
 	public void onDisable(){
