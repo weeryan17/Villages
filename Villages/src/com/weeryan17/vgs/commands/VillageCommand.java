@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.weeryan17.vgs.util.PlayerUtil;
+//import com.weeryan17.vgs.util.PlayerUtil;
 
 public class VillageCommand implements CommandExecutor {
 
@@ -43,11 +43,12 @@ public class VillageCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.DARK_GREEN + "/v admin: " + ChatColor.BLUE + "This is the command for the admin help menu. It only shows commands you have access to.");
 			}
 			if(sender instanceof Player){
-				PlayerUtil p = (PlayerUtil) sender;
+				//PlayerUtil p = (PlayerUtil) sender;
 				sender.sendMessage(ChatColor.DARK_GREEN + "/v new [name]: " + ChatColor.BLUE + "Creates a new village with the specifyed name");
-				if(p.checkVillageOwner()){
-					sender.sendMessage(ChatColor.DARK_GREEN + "/v options: " + ChatColor.BLUE + "Brings up the town options gui.");
-				}
+				//if(p.checkVillageOwner()){
+					//sender.sendMessage(ChatColor.DARK_GREEN + "/v options: " + ChatColor.BLUE + "Brings up the town options gui.");
+				//}
+				
 				}
 			}
 		}

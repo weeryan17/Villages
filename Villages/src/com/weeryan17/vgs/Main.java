@@ -70,6 +70,9 @@ public class Main extends JavaPlugin {
 	   public FileConfiguration getTurretConfig(String village){
 		  return this.config("turrets", village); 
 	   }
+	   public FileConfiguration getVillagePlayerData(String village){
+		   return this.config("Players", village);
+	   }
 	   public void saveTurretConfig(String village){
 		   this.saveConfigs("turrets", village);
 	   }

@@ -26,14 +26,16 @@ public class PlayerFinder implements Runnable {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		ConfigurationSection villages = this.instance.getVillageListConfig().getConfigurationSection("Villages.");
 		for(String village : villages.getKeys(false)){
-			ConfigurationSection turrets = this.instance.getTurretConfig(village).getConfigurationSection("Turret.");
-			for(String turret : turrets.getKeys(false)){
-				int x = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".x");
-				int y = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".y");
-				int z = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".z");
-				World world = (World) this.instance.getTurretConfig(village).get("Turret." + turret + "." + "centerBlock" + ".world");
-				Location loc = new Location(world, x, y, z);
-				locations.add(loc);
+			if(this.instance.getTurretConfig(village).contains("Turret.")){
+				ConfigurationSection turrets = this.instance.getTurretConfig(village).getConfigurationSection("Turret.");
+				for(String turret : turrets.getKeys(false)){
+					int x = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".x");
+					int y = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".y");
+					int z = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".z");
+					World world = (World) this.instance.getTurretConfig(village).get("Turret." + turret + "." + "centerBlock" + ".world");
+					Location loc = new Location(world, x, y, z);
+					locations.add(loc);
+				}
 			}
 		}
 		for(Location loc : locations){
