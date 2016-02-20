@@ -1,7 +1,9 @@
 package com.weeryan17.vgs.util;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.vgs.Main;
@@ -18,19 +20,33 @@ public abstract class PlayerUtil extends Main implements Player {
 	}
 	
 	
-	public boolean checkVillageOwner(String village){
+	public boolean checkVillageOwner(){
+		ArrayList<String> uuidList = new ArrayList<String>();
 		UUID uuid = p.getUniqueId();
 		String uuidString = uuid.toString();
-		String uuidConfig = this.instance.getVillagePlayerData(village).getString("Owner.UUID");
-		if(uuidString.equals(uuidConfig)){
+		ConfigurationSection section = this.instance.getVillageListConfig().getConfigurationSection("Vilages.");
+		for(String village : section.getKeys(false)){
+			String uuidConfig = this.instance.getVillagePlayerData(village).getString("Owner.UUID");
+			uuidList.add(uuidConfig);
+		}
+		if(uuidList.contains(uuidString)){
 			return true;
 		} else {
 			return false;
 		}
 	}
 	public boolean checkInVillage(String village){
+		ArrayList<String> uuidList = new ArrayList<String>();
 		UUID uuid = p.getUniqueId();
 		String uuidString = uuid.toString();
-		return false;
+		ConfigurationSection members = this.instance.getVillagePlayerData(village).getConfigurationSection("Members.");
+		for(String member : members.getKeys(false)){
+			uuidList.add(member);
+		}
+		if(uuidList.contains(uuidString)){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
