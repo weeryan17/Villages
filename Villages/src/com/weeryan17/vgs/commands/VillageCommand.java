@@ -33,7 +33,9 @@ public class VillageCommand implements CommandExecutor {
 			case "admin":{
 				if(sender.hasPermission("villages.admin")){
 					admin.executeCommand(sender, cmd, label, Arrays.copyOfRange(args, 1, args.length));
-				}	
+				} else {
+					sender.sendMessage(ChatColor.RED + "You don't have access to any admin futures so don't try to do them");
+				}
 			}
 			}
 		} else {
@@ -63,6 +65,19 @@ public class VillageCommand implements CommandExecutor {
 				}
 				
 			}
+		}
+		case "admin":{
+			if(sender.hasPermission("villages.admin")){
+			sender.sendMessage(ChatColor.DARK_GREEN + "/v admin: " + ChatColor.BLUE + "This is the command for the admin help menu. It only shows commands you have access to.");
+			} else {
+				sender.sendMessage(ChatColor.RED + "You don't have access to any admin futures so don't try to do them");
+			}
+		}
+		case "admin-General":{
+			
+		}
+		default:{
+			sender.sendMessage(ChatColor.RED + "No such command or sub command");
 		}
 		}
 	}
