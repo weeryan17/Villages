@@ -44,7 +44,7 @@ public class VillageCommand implements CommandExecutor {
 		
 		return false;
 	}
-	public void help(CommandSender sender, String command){
+	public static void help(CommandSender sender, String command){
 		
 		sender.sendMessage(ChatColor.YELLOW + "Villages help");
 		sender.sendMessage(ChatColor.YELLOW + "Oo--------------------------------oO");

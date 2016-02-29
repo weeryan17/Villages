@@ -35,6 +35,7 @@ public class Main extends JavaPlugin {
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new PlayerFinder(plugin), 0L, 10L);
+		this.getLogger().info("Plugin enabled");
 	}
 	
 	public void onDisable(){
@@ -70,17 +71,20 @@ public class Main extends JavaPlugin {
 	   public FileConfiguration getTurretConfig(String village){
 		  return this.config("turrets", village); 
 	   }
-	   public FileConfiguration getVillagePlayerData(String village){
-		   return this.config("Players", village);
-	   }
 	   public void saveTurretConfig(String village){
 		   this.saveConfigs("turrets", village);
 	   }
 	   public void saveVillageListConfig(){
-		   this.saveConfigs("village", null);
+		   this.saveConfigs("village", "General");
 	   }
 	   public FileConfiguration getVillageListConfig(){
-		   return this.config("village", null);
+		   return this.config("village", "General");
+	   }
+	   public void saveVillagePlayerData(String village){
+		   this.saveConfigs("Players", village);
+	   }
+	   public FileConfiguration getVillagePlayerData(String village){
+		   return this.config("Players", village);
 	   }
 	   public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber){
 		   double x = stand.getLocation().getX();
