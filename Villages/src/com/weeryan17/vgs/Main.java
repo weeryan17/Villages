@@ -31,7 +31,9 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		VillageCommand mainCommand = new VillageCommand();
 		TurretPlacer turret = new TurretPlacer(plugin);
+		Events events = new Events(plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
+		Bukkit.getServer().getPluginManager().registerEvents(events, plugin);
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new PlayerFinder(plugin), 0L, 10L);
@@ -68,11 +70,11 @@ public class Main extends JavaPlugin {
 	            getLogger().log(Level.WARNING, "Couldn''t save {0}.yml", name);
 	        }
 	   }
-	   public FileConfiguration getTurretConfig(String village){
-		  return this.config("turrets", village); 
+	   public FileConfiguration getTurretConfig(String player){
+		  return this.config("turrets", player); 
 	   }
-	   public void saveTurretConfig(String village){
-		   this.saveConfigs("turrets", village);
+	   public void saveTurretConfig(String player){
+		   this.saveConfigs("turrets", player);
 	   }
 	   public void saveVillageListConfig(){
 		   this.saveConfigs("village", "General");
@@ -86,11 +88,17 @@ public class Main extends JavaPlugin {
 	   public FileConfiguration getVillagePlayerData(String village){
 		   return this.config("Players", village);
 	   }
+	   public FileConfiguration getPlayerList(){
+		   return this.config("Players", "General");
+	   }
+	   public void savePlayerList(){
+		   this.saveConfigs("Players", "General");
+	   }
 	   public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber){
 		   double x = stand.getLocation().getX();
 		   double y = stand.getLocation().getY();
 		   double z = stand.getLocation().getZ();
-		   String world = stand.getWorld().toString();
+		   World world = stand.getWorld();
 		   ItemStack item = stand.getHelmet();
 		   String material = item.getType().toString();
 		   EulerAngle angle = stand.getHeadPose();

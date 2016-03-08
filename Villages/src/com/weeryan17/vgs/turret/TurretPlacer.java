@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
@@ -147,7 +146,7 @@ public class TurretPlacer implements Listener {
 					crystalLoc.getWorld().spawnEntity(crystalLoc, EntityType.ENDER_CRYSTAL);
 				
 					//center cord storing
-					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".world", world.toString());
+					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".world", world);
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".x", x);
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".y", y);
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".z", z);
@@ -198,11 +197,5 @@ public class TurretPlacer implements Listener {
 				}
 			}
 		}
-	}
-	@EventHandler
-	public void onJoinTemp(PlayerJoinEvent event){
-		String p = event.getPlayer().getName();
-		this.instance.getVillageListConfig().set("Villages." + p, 1);
-		this.instance.saveVillageListConfig();
 	}
 }

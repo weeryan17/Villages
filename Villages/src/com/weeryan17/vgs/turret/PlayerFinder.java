@@ -14,46 +14,39 @@ import com.weeryan17.vgs.Main;
 public class PlayerFinder implements Runnable {
 	
 	Main instance;
-	double radius; 
 	
 	public PlayerFinder(Main instance){
-	this.instance = instance;
-	this.radius = instance.getConfig().getDouble("Temp");
+		this.instance = instance;
 	}
 
 	@Override
 	public void run() {
-		this.instance.getLogger().info("Running");
-		ArrayList<Location> locations = new ArrayList<Location>();
-		if(this.instance.getVillageListConfig().contains("Villages.")){
-		ConfigurationSection villages = this.instance.getVillageListConfig().getConfigurationSection("Villages.");
-			for(String village : villages.getKeys(false)){
-				this.instance.getLogger().info("Villages found" + village);
-				if(this.instance.getTurretConfig(village).contains("Turret.")){
-					ConfigurationSection turrets = this.instance.getTurretConfig(village).getConfigurationSection("Turret.");
+		if(this.instance.getPlayerList().contains("Players.")){
+			ConfigurationSection players = this.instance.getPlayerList().getConfigurationSection("Players.");
+			for(String UUID : players.getKeys(false)){
+				String player = this.instance.getPlayerList().getString("Players." + UUID + ".name");
+				ArrayList<Location> locations = new ArrayList<Location>();
+				if(this.instance.getTurretConfig(player).contains("Turret.")){
+					ConfigurationSection turrets = this.instance.getTurretConfig(player).getConfigurationSection("Turret.");
 					for(String turret : turrets.getKeys(false)){
-						int x = this.instance.getTurretConfig(village).getInt("Turret.turret" + turret + "." + "centerBlock" + ".x");
-						int y = this.instance.getTurretConfig(village).getInt("Turret.turret" + turret + "." + "centerBlock" + ".y");
-						int z = this.instance.getTurretConfig(village).getInt("Turret.turret" + turret + "." + "centerBlock" + ".z");
-						World world = (World) this.instance.getTurretConfig(village).get("Turret.turret" + turret + "." + "centerBlock" + ".world");
+						int x = this.instance.getTurretConfig(player).getInt("Turret." + turret + ".centerBlock.x");
+						int y = this.instance.getTurretConfig(player).getInt("Turret." + turret + "." + "centerBlock" + ".y");
+						int z = this.instance.getTurretConfig(player).getInt("Turret." + turret + "." + "centerBlock" + ".z");
+						World world = (World) this.instance.getTurretConfig(player).get("Turret." + turret + ".centerBlock.world");
 						Location loc = new Location(world, x, y, z);
 						locations.add(loc);
 					}
 				}
-			}
-			for(Location loc : locations){
-				Collection<Entity> entitys = loc.getWorld().getNearbyEntities(loc, 20, 20, 20);
-				for(Entity entity : entitys){
-					if(entity instanceof Player){
-						Player p = (Player) entity;
-						p.sendMessage("You are in the set turret range");
+				for(Location loc : locations){
+					Collection<Entity> entitys = loc.getWorld().getNearbyEntities(loc, 20, 20, 20);
+					for(Entity entity : entitys){
+						if(entity instanceof Player){
+							Player p = (Player) entity;
+							p.sendMessage("You are in the set turret range");
+						}
 					}
 				}
 			}
-		
-		} else {
-			this.instance.getLogger().info("no villages found");
 		}
 	}
-	
 }
