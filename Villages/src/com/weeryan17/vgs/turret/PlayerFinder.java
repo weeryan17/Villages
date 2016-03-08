@@ -2,7 +2,6 @@ package com.weeryan17.vgs.turret;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,8 +33,8 @@ public class PlayerFinder implements Runnable {
 						int x = this.instance.getTurretConfig(player).getInt("Turret." + turret + ".centerBlock.x");
 						int y = this.instance.getTurretConfig(player).getInt("Turret." + turret + "." + "centerBlock" + ".y");
 						int z = this.instance.getTurretConfig(player).getInt("Turret." + turret + "." + "centerBlock" + ".z");
-						UUID worldUUID = (UUID) this.instance.getTurretConfig(player).get("Turret." + turret + ".centerBlock.world");
-						World world = Bukkit.getWorld(worldUUID);
+						String worldName = this.instance.getTurretConfig(player).getString("Turret." + turret + ".centerBlock.world");
+						World world = Bukkit.getWorld(worldName);
 						Location loc = new Location(world, x, y, z);
 						locations.add(loc);
 					}

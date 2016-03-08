@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -115,7 +114,7 @@ public class Main extends JavaPlugin {
 		String material = item.getType().toString();
 		EulerAngle angle = stand.getHeadPose();
 		double yAngle = angle.getY();
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".World", world.getUID());
+		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".World", world.getName());
 		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".x", x);
 		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".y", y);
 		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".z", z);
@@ -124,8 +123,8 @@ public class Main extends JavaPlugin {
 	}
 
 	public ArmorStand getArmorStand(String village, int standNumber, int turretNumber) {
-		UUID worldUUID = (UUID) this.getTurretConfig(village).get("Turret.turret" + turretNumber + ".stand" + standNumber + ".World");
-		World world = Bukkit.getWorld(worldUUID);
+		String worldName = this.getTurretConfig(village).getString("Turret.turret" + turretNumber + ".stand" + standNumber + ".World");
+		World world = Bukkit.getWorld(worldName);
 		double x = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".x");
 		double y = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".y");
 		double z = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".z");
