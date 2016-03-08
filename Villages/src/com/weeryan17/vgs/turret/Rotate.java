@@ -1,5 +1,8 @@
 package com.weeryan17.vgs.turret;
 
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -15,7 +18,8 @@ public class Rotate {
 		//angle is supposed to be in radians
 		int x = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlock" + ".x");
 		int z = this.instance.getTurretConfig(village).getInt("Turret." + turret + "." + "centerBlcok" + ".z");
-		World world = (World) this.instance.getTurretConfig(village).get("Turret " + turret + "." + "centerBlcok" + ".world");
+		UUID worldUUID = (UUID) this.instance.getTurretConfig(village).get("Turret " + turret + "." + "centerBlcok" + ".world");
+		World world = Bukkit.getWorld(worldUUID);
 		Float angleF = (float) angle;
 		
 		//Stand 1

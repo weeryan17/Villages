@@ -146,7 +146,7 @@ public class TurretPlacer implements Listener {
 					crystalLoc.getWorld().spawnEntity(crystalLoc, EntityType.ENDER_CRYSTAL);
 				
 					//center cord storing
-					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".world", world);
+					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".world", world.getUID());
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".x", x);
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".y", y);
 					this.instance.getTurretConfig(name).set("Turret.turret" + turret + "." + "centerBlock" + ".z", z);
