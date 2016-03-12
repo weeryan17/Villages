@@ -14,7 +14,10 @@ public class ProtectionEvents implements Listener {
 	}
 	@EventHandler
 	public void onDammange(EntityDamageByEntityEvent event){
-		
+		Entity dammage = event.getEntity();
+		if(dammage.getType() == EntityType.ENDER_CRYSTAL){
+			event.setCancelled(true);
+		}
 	}
 	@EventHandler 
 	public void onMobSpawn(EntitySpawnEvent event){
@@ -27,4 +30,12 @@ public class ProtectionEvents implements Listener {
 			}
 		}
 	}
+	@EventHandler
+	public void onTarget(EntityTargetEvent event){
+		EntityUtil entity = (EntityUtil) event.getEntity();
+		if(entity.checkInVillage()){
+			event.setCancelled(true);
+		}
+	}
+	
 }

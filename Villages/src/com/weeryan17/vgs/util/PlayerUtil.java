@@ -49,4 +49,18 @@ public abstract class PlayerUtil extends Main implements Player {
 			return false;
 		}
 	}
+	public String getVillage(){
+		if(this.instance.getVillageListConfig().contains("Villages.")){
+			
+		}
+		return "";
+	}
+	public boolean hasSubPermission(String subPermission){
+		
+		return false;
+	}
+	public String getRank(){
+		
+		return "";
+	}
 }

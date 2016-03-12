@@ -21,8 +21,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.EulerAngle;
 
 import com.weeryan17.vgs.commands.VillageCommand;
+import com.weeryan17.vgs.protection.ProtectionEvents;
 import com.weeryan17.vgs.turret.PlayerFinder;
 import com.weeryan17.vgs.turret.TurretPlacer;
+import com.weeryan17.vgs.util.EntityMove;
 
 public class Main extends JavaPlugin {
 
@@ -33,11 +35,14 @@ public class Main extends JavaPlugin {
 		VillageCommand mainCommand = new VillageCommand();
 		TurretPlacer turret = new TurretPlacer(plugin);
 		Events events = new Events(plugin);
+		ProtectionEvents protection = new ProtectionEvents();
 		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(events, plugin);
+		Bukkit.getServer().getPluginManager().registerEvents(protection, plugin);
 		getCommand("Villages").setExecutor(mainCommand);
 		getCommand("V").setExecutor(mainCommand);
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new PlayerFinder(plugin), 0L, 10L);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new EntityMove(), 0L, 10L);
 		this.getLogger().info("Plugin enabled");
 	}
 
@@ -103,6 +108,12 @@ public class Main extends JavaPlugin {
 
 	public void savePlayerList() {
 		this.saveConfigs("Players", "General");
+	}
+	public FileConfiguration getVillageLandData(String village){
+		return this.config("Land", village);
+	}
+	public void saveVillageLandData(String village){
+		this.saveConfigs("Land", village);
 	}
 
 	public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber) {
