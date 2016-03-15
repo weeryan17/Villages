@@ -8,14 +8,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.weeryan17.vgs.Main;
+import com.weeryan17.vgs.GUIMannagemnt.Books;
 import com.weeryan17.vgs.util.PlayerUtil;
 
 public class VillageCommand implements CommandExecutor {
 
 	AdminSubCommand admin;
-
-	public VillageCommand() {
+	Main instance;
+	
+	public VillageCommand(Main instance) {
 		admin = new AdminSubCommand();
+		this.instance = instance;
 	}
 
 	@Override
@@ -37,6 +41,13 @@ public class VillageCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "You don't have access to any admin futures so don't try to do them");
 				}
 			}
+			case "book": {
+				if(sender instanceof Player){
+					PlayerUtil player = (PlayerUtil) sender;
+					Books book = new Books(this.instance);
+					book.givePermisionBook(player, args[1]);
+				}
+			}
 			}
 		} else {
 
@@ -45,7 +56,7 @@ public class VillageCommand implements CommandExecutor {
 		return false;
 	}
 
-	public static void help(CommandSender sender, String command) {
+	public void help(CommandSender sender, String command) {
 
 		sender.sendMessage(ChatColor.YELLOW + "Villages help");
 		sender.sendMessage(ChatColor.YELLOW + "Oo--------------------------------oO");
@@ -61,10 +72,25 @@ public class VillageCommand implements CommandExecutor {
 			if (sender instanceof Player) {
 				PlayerUtil p = (PlayerUtil) sender;
 				sender.sendMessage(ChatColor.DARK_GREEN + "/v new [name]: " + ChatColor.BLUE + "Creates a new village with the specifyed name");
-				if (p.checkVillageOwner()) {
+				if (p.checkVillageOwner() || p.hasSubPermission("villages.options")) {
 					sender.sendMessage(ChatColor.DARK_GREEN + "/v options: " + ChatColor.BLUE + "Brings up the town options gui.");
 				}
+				if(p.checkVillageOwner() || p.hasSubPermission("villages.subPermission")){
+					sender.sendMessage(ChatColor.DARK_GREEN + "/v book [rank]: " + ChatColor.BLUE + "Gives you the permission book for the specifyed rank");
+				}
 
+			}
+		}
+		case "book": {
+			if(sender instanceof Player){
+				PlayerUtil player = (PlayerUtil) sender;
+				if(player.checkVillageOwner() || player.hasSubPermission("villages.subPermission")){
+					player.sendMessage("");
+				} else {
+					sender.sendMessage(ChatColor.RED + "You don't have permission to edit village sub permisions so don't try");
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "You arn't a player so I can't give you a book, nor can you edit it");
 			}
 		}
 		case "admin": {
@@ -81,6 +107,7 @@ public class VillageCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "No such command or sub command");
 		}
 		}
+		sender.sendMessage(ChatColor.YELLOW + "Oo--------------------------------oO");
 	}
 
 }

@@ -7,15 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.configuration.file.*;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.EulerAngle;
@@ -25,14 +20,22 @@ import com.weeryan17.vgs.protection.ProtectionEvents;
 import com.weeryan17.vgs.turret.PlayerFinder;
 import com.weeryan17.vgs.turret.TurretPlacer;
 import com.weeryan17.vgs.util.EntityMove;
-
+/**
+ * This is the main class that is the first class called and the base for everything.
+ * This should never be referenced outside this plugin.
+ * 
+ * @author weeryan17
+ *
+ */
 public class Main extends JavaPlugin {
 
 	Main plugin;
-
+	/**
+	 * This is the method that is called when the plugin is enabled.
+	 */
 	public void onEnable() {
 		plugin = this;
-		VillageCommand mainCommand = new VillageCommand();
+		VillageCommand mainCommand = new VillageCommand(plugin);
 		TurretPlacer turret = new TurretPlacer(plugin);
 		Events events = new Events(plugin);
 		ProtectionEvents protection = new ProtectionEvents();
@@ -45,13 +48,22 @@ public class Main extends JavaPlugin {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new EntityMove(), 0L, 10L);
 		this.getLogger().info("Plugin enabled");
 	}
-
+	/**
+	 * This is the method that is call when the plugin is disabled.
+	 */
 	public void onDisable() {
 
 	}
-
+	
 	HashMap<String, FileConfiguration> datas = new HashMap<String, FileConfiguration>();
 	private FileConfiguration data;
+	/**
+	 * Base method for using configs.
+	 * 
+	 * @param name Name of the config file you want to load.
+	 * @param subFolder The sub folder that you want to store the file in.
+	 * @return The config.
+	 */
 	private FileConfiguration config(String name, String subFolder) {
 		final File config = new File(getDataFolder() + "\\" + subFolder, name + ".yml");
 		if (datas.get(name) == null) {
@@ -66,7 +78,12 @@ public class Main extends JavaPlugin {
 		}
 		return datas.get(name);
 	}
-
+	/**
+	 * Base method for saving configs.
+	 * 
+	 * @param name Name of the config you want to save.
+	 * @param subFolder The sub folder you want to store the file in.
+	 */
 	private void saveConfigs(String name, String subFolder) {
 		final File config = new File(getDataFolder() + "\\" + subFolder, name + ".yml");
 		try {
@@ -77,46 +94,94 @@ public class Main extends JavaPlugin {
 			getLogger().log(Level.WARNING, "Couldn''t save {0}.yml", name);
 		}
 	}
-
+	/**
+	 * Gets the turret configuration file for the specified player.
+	 * 
+	 * @param player The player that the turrets belong to.
+	 * @return The turret configuration file for the specified player.
+	 */
 	public FileConfiguration getTurretConfig(String player) {
 		return this.config("turrets", player);
 	}
-
+	/**
+	 * Saves the turret configuration file for the specified player.
+	 * 
+	 * @param player The player that the turrets belong to.
+	 */
 	public void saveTurretConfig(String player) {
 		this.saveConfigs("turrets", player);
 	}
-
-	public void saveVillageListConfig() {
-		this.saveConfigs("village", "General");
-	}
-
+	/**
+	 * Gets the configuration file that contains a list of all villages.
+	 * 
+	 * @return The village list configuration file.
+	 */
 	public FileConfiguration getVillageListConfig() {
 		return this.config("village", "General");
 	}
-
-	public void saveVillagePlayerData(String village) {
-		this.saveConfigs("Players", village);
+	/**
+	 * Saves the configuration file that contains a list of all villages.
+	 */
+	public void saveVillageListConfig() {
+		this.saveConfigs("village", "General");
 	}
-
+	/**
+	 * Gets the village player data configuration file for the specified village.
+	 * 
+	 * @param village The specified village.
+	 * @return The configuration file for the specified village.
+	 */
 	public FileConfiguration getVillagePlayerData(String village) {
 		return this.config("Players", village);
 	}
-
+	/**
+	 * Saves the player data for the specified village.
+	 * 
+	 * @param village The specified village.
+	 */
+	public void saveVillagePlayerData(String village) {
+		this.saveConfigs("Players", village);
+	}
+	/**
+	 * Gets the player list configuration file.
+	 * 
+	 * @return The configuration file that contains all the players.
+	 */
 	public FileConfiguration getPlayerList() {
 		return this.config("Players", "General");
 	}
-
+	/**
+	 * Save the configuration file that contains a list of all players.
+	 */
 	public void savePlayerList() {
 		this.saveConfigs("Players", "General");
 	}
+	/**
+	 * Gets the village protected land configuration file for the specified village.
+	 * 
+	 * @param village The specified village.
+	 * @return The configuration file that contains the land data for specified village.
+	 */
 	public FileConfiguration getVillageLandData(String village){
 		return this.config("Land", village);
 	}
+	/**
+	 * Saves the land data for the specified village.
+	 * 
+	 * @param village The specified village.
+	 */
 	public void saveVillageLandData(String village){
 		this.saveConfigs("Land", village);
 	}
-
-	public void storeArmorStand(ArmorStand stand, String village, int standNumber, int turretNumber) {
+	/**
+	 * Saves the specified stand in the turret config for the specified player.
+	 * 
+	 * @param stand The armor stand you want to store.
+	 * @param player The player name of who spawned the turret.
+	 * @param standNumber The number of the stand being stored.
+	 * @param turretNumber The number of the turret we are storing it in.
+	 */
+	public void storeArmorStand(ArmorStand stand, String player, int standNumber, int turretNumber) {
 		double x = stand.getLocation().getX();
 		double y = stand.getLocation().getY();
 		double z = stand.getLocation().getZ();
@@ -125,20 +190,27 @@ public class Main extends JavaPlugin {
 		String material = item.getType().toString();
 		EulerAngle angle = stand.getHeadPose();
 		double yAngle = angle.getY();
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".World", world.getName());
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".x", x);
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".y", y);
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".z", z);
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".yAngle", yAngle);
-		this.getTurretConfig(village).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".Material", material);
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".World", world.getName());
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".x", x);
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".y", y);
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".z", z);
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".yAngle", yAngle);
+		this.getTurretConfig(player).set("Turret.turret" + turretNumber + ".stand" + standNumber + ".Material", material);
 	}
-
-	public ArmorStand getArmorStand(String village, int standNumber, int turretNumber) {
-		String worldName = this.getTurretConfig(village).getString("Turret.turret" + turretNumber + ".stand" + standNumber + ".World");
+	/**
+	 * Gets the armor stand from the turret configuration file.
+	 * 
+	 * @param player The name of the player who own the turret.
+	 * @param standNumber The number of the stand you want to get.
+	 * @param turretNumber The turret you are getting the stand from.
+	 * @return An armor stand.
+	 */
+	public ArmorStand getArmorStand(String player, int standNumber, int turretNumber) {
+		String worldName = this.getTurretConfig(player).getString("Turret.turret" + turretNumber + ".stand" + standNumber + ".World");
 		World world = Bukkit.getWorld(worldName);
-		double x = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".x");
-		double y = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".y");
-		double z = this.getTurretConfig(village).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".z");
+		double x = this.getTurretConfig(player).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".x");
+		double y = this.getTurretConfig(player).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".y");
+		double z = this.getTurretConfig(player).getDouble("Turret.turret" + turretNumber + ".stand" + standNumber + ".z");
 		Location loc = new Location(world, x, y, z);
 		List<Entity> standList = loc.getWorld().getEntities();
 		ArmorStand stand = null;

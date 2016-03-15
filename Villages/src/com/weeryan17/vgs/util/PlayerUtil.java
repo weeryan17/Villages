@@ -35,6 +35,10 @@ public abstract class PlayerUtil extends Main implements Player {
 			return false;
 		}
 	}
+	/*
+	 * Checks if the player is in a specified village
+	 * @pram village The village name
+	 */
 	public boolean checkInVillage(String village){
 		ArrayList<String> uuidList = new ArrayList<String>();
 		UUID uuid = p.getUniqueId();
@@ -49,6 +53,9 @@ public abstract class PlayerUtil extends Main implements Player {
 			return false;
 		}
 	}
+	/*
+	 * Gets the village the player is currently in
+	 */
 	public String getVillage(){
 		if(this.instance.getVillageListConfig().contains("Villages.")){
 			
