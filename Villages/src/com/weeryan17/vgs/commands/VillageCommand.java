@@ -11,7 +11,12 @@ import org.bukkit.entity.Player;
 import com.weeryan17.vgs.Main;
 import com.weeryan17.vgs.GUIMannagemnt.Books;
 import com.weeryan17.vgs.util.PlayerUtil;
-
+/**
+ * This is the main command and the base for all other commands.
+ * 
+ * @author weeryan17
+ *
+ */
 public class VillageCommand implements CommandExecutor {
 
 	AdminSubCommand admin;

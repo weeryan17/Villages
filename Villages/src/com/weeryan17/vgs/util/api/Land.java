@@ -7,7 +7,12 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.weeryan17.vgs.Main;
-
+/**
+ * Api class for everything that has to do with village protection.
+ * 
+ * @author weeryan17
+ *
+ */
 public class Land extends Main {
 	
 	Main instance = this;

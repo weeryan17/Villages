@@ -11,7 +11,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.vgs.Main;
-
+/**
+ * Used for finding a player relative to the turret.
+ * 
+ * @author weeryan17
+ *
+ */
 public class PlayerFinder implements Runnable {
 	
 	Main instance;
@@ -19,7 +24,9 @@ public class PlayerFinder implements Runnable {
 	public PlayerFinder(Main instance){
 		this.instance = instance;
 	}
-
+	/**
+	 * This is constantly ran by the server.
+	 */
 	@Override
 	public void run() {
 		if(this.instance.getPlayerList().contains("Players.")){

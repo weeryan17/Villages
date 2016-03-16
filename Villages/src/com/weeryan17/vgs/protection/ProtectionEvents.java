@@ -6,7 +6,12 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 
 import com.weeryan17.vgs.util.EntityUtil;
-
+/**
+ * This class contains the events for making sure land is protected.
+ * 
+ * @author weeryan17
+ *
+ */
 public class ProtectionEvents implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event){

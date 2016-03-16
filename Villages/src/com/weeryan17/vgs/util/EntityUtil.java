@@ -5,12 +5,21 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 
 import com.weeryan17.vgs.Main;
-
+/**
+ * Utility for doing stuff with entitys.
+ * 
+ * @author weeryan17
+ *
+ */
 public abstract class EntityUtil extends Main implements Entity {
 	
 	Entity entity = this;
 	Main instance = this;
-	
+	/**
+	 * Checks if the entity is in a village.
+	 * 
+	 * @return a boolean of weather or not the entity is in a village.
+	 */
 	public boolean checkInVillage(){
 		boolean inVillage = false;
 		Location loc = entity.getLocation();
@@ -34,6 +43,9 @@ public abstract class EntityUtil extends Main implements Entity {
 		return inVillage;
 		
 	}
+	/**
+	 * Kills the entity by teloporting it to the void
+	 */
 	public void kill(){
 		Location location = new Location(entity.getWorld(), entity.getLocation().getX(), -1, entity.getLocation().getZ());
 		entity.teleport(location);

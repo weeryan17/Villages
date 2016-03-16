@@ -6,7 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-
+/**
+ * This is finding when a entity moves in the world and doing stuff with that.
+ * 
+ * @author weeryan17
+ *
+ */
 public class EntityMove implements Runnable {
 	
 	HashMap<Entity, Location> map = new HashMap<Entity, Location>();

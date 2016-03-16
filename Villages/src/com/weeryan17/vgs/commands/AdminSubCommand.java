@@ -2,7 +2,12 @@ package com.weeryan17.vgs.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
+/**
+ * This is the admin sub command class called whenever someone does /v admin.
+ * 
+ * @author weeryan17
+ *
+ */
 public class AdminSubCommand {
 	VillageCommand command;
 	public AdminSubCommand() {

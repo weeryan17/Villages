@@ -7,7 +7,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.weeryan17.vgs.Main;
-
+/**
+ * Class for doing special stuff with players.
+ * 
+ * @author weeryan17
+ *
+ */
 public abstract class PlayerUtil extends Main implements Player {
 	
 	Player p;
@@ -19,7 +24,11 @@ public abstract class PlayerUtil extends Main implements Player {
 		this.instance = this;
 	}
 	
-	
+	/**
+	 * Checks if the player is a village owner
+	 * 
+	 * @return A boolean  of weather or not the player owns a village.
+	 */
 	public boolean checkVillageOwner(){
 		ArrayList<String> uuidList = new ArrayList<String>();
 		UUID uuid = p.getUniqueId();
@@ -35,9 +44,11 @@ public abstract class PlayerUtil extends Main implements Player {
 			return false;
 		}
 	}
-	/*
-	 * Checks if the player is in a specified village
-	 * @pram village The village name
+	/**
+	 * Check if the player is part of a certain village.
+	 * 
+	 * @param village The specified village.
+	 * @return A boolean of weather he/she is in a village or not.
 	 */
 	public boolean checkInVillage(String village){
 		ArrayList<String> uuidList = new ArrayList<String>();
@@ -53,8 +64,10 @@ public abstract class PlayerUtil extends Main implements Player {
 			return false;
 		}
 	}
-	/*
-	 * Gets the village the player is currently in
+	/**
+	 * Gets the village the player is in.
+	 * 
+	 * @return The village the player is in.
 	 */
 	public String getVillage(){
 		if(this.instance.getVillageListConfig().contains("Villages.")){
@@ -62,10 +75,21 @@ public abstract class PlayerUtil extends Main implements Player {
 		}
 		return "";
 	}
+	/**
+	 * Checks if the player has a sub permission defined by the plugin.
+	 * 
+	 * @param subPermission The specified sub permission you want to check.
+	 * @return A boolean of of weather or not the player has that sub permission.
+	 */
 	public boolean hasSubPermission(String subPermission){
 		
 		return false;
 	}
+	/**
+	 * Gets the current village rank of the player.
+	 * 
+	 * @return The village rank the player is.
+	 */
 	public String getRank(){
 		
 		return "";

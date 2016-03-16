@@ -17,7 +17,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
 import com.weeryan17.vgs.Main;
-
+/**
+ * Used for placing a new turret in the world.
+ * 
+ * @author weeryan17
+ *
+ */
 public class TurretPlacer implements Listener {
 	
 	Main instance;
