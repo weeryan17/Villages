@@ -14,9 +14,13 @@ import com.weeryan17.vgs.Main;
  *
  */
 public abstract class PlayerUtil extends Main implements Player {
-	
+	/**
+	 * Represents the player.
+	 */
 	Player p;
-	
+	/**
+	 * An instance representing the main class.
+	 */
 	Main instance;
 	
 	public PlayerUtil(){
@@ -70,10 +74,19 @@ public abstract class PlayerUtil extends Main implements Player {
 	 * @return The village the player is in.
 	 */
 	public String getVillage(){
+		String village = null;
 		if(this.instance.getVillageListConfig().contains("Villages.")){
-			
+			ConfigurationSection villages = this.instance.getVillageListConfig().getConfigurationSection("Villages.");
+			for(String villageRaw : villages.getKeys(false)){
+				if(this.instance.getVillagePlayerData(villageRaw).contains("Members.")){
+					ConfigurationSection members = this.instance.getVillagePlayerData(villageRaw).getConfigurationSection("Members.");
+					if(members.contains(getName())){
+						village = villageRaw;
+					}
+				}
+			}
 		}
-		return "";
+		return village;
 	}
 	/**
 	 * Checks if the player has a sub permission defined by the plugin.
@@ -82,6 +95,7 @@ public abstract class PlayerUtil extends Main implements Player {
 	 * @return A boolean of of weather or not the player has that sub permission.
 	 */
 	public boolean hasSubPermission(String subPermission){
+		//String rank = this.getRank();
 		
 		return false;
 	}
@@ -91,7 +105,20 @@ public abstract class PlayerUtil extends Main implements Player {
 	 * @return The village rank the player is.
 	 */
 	public String getRank(){
-		
-		return "";
+		String rank = null;
+		for(String village: this.instance.getVillageList()){
+			if(this.instance.getVillagePermissionData(village).contains("Ranks.")){
+				ConfigurationSection ranks = this.instance.getVillagePermissionData(village).getConfigurationSection("Ranks.");
+				for(String rankRaw: ranks.getKeys(false)){
+					ConfigurationSection players = this.instance.getVillagePlayerData(village).getConfigurationSection(rankRaw +".");
+					for(String player: players.getKeys(false)){
+						if(p.getName() == player){
+							rank = player;
+						}
+					}
+				}
+			}
+		}
+		return rank;
 	}
 }

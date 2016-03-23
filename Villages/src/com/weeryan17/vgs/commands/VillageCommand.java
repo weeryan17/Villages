@@ -18,10 +18,19 @@ import com.weeryan17.vgs.util.PlayerUtil;
  *
  */
 public class VillageCommand implements CommandExecutor {
-
+	/**
+	 * Represents one of the sub commands.
+	 */
 	AdminSubCommand admin;
+	/**
+	 * Represents the main class.
+	 */
 	Main instance;
-	
+	/**
+	 * Constructor defines the main class and all sub commands.
+	 * 
+	 * @param instance The main class.
+	 */
 	public VillageCommand(Main instance) {
 		admin = new AdminSubCommand();
 		this.instance = instance;

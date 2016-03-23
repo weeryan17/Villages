@@ -14,7 +14,15 @@ import com.weeryan17.vgs.util.PlayerUtil;
  *
  */
 public class Books {
+	/**
+	 * Represents the main class.
+	 */
 	Main instance;
+	/**
+	 * Constructor
+	 * 
+	 * @param instance the instance of the main class.
+	 */
 	public Books(Main instance){
 		this.instance = instance;
 	}

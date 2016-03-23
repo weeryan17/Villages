@@ -3,12 +3,14 @@ package com.weeryan17.vgs;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +30,9 @@ import com.weeryan17.vgs.util.EntityMove;
  *
  */
 public class Main extends JavaPlugin {
-
+	/**
+	 * Represents this class.
+	 */
 	Main plugin;
 	/**
 	 * This is the method that is called when the plugin is enabled.
@@ -174,6 +178,23 @@ public class Main extends JavaPlugin {
 		this.saveConfigs("Land", village);
 	}
 	/**
+	 * Gets the Rank configuration file.
+	 * 
+	 * @param village The village you want to get the ranks from.
+	 * @return The Player rank configuration file.
+	 */
+	public FileConfiguration getVillagePermissionData(String village){
+		return this.config("Ranks", village);
+	}
+	/**
+	 * Save the Rank configuration file.
+	 * 
+	 * @param village The village rank file you want to save.
+	 */
+	public void saveVillagePermissionData(String village){
+		this.saveConfigs("Ranks", village);
+	}
+	/**
 	 * Saves the specified stand in the turret config for the specified player.
 	 * 
 	 * @param stand The armor stand you want to store.
@@ -200,7 +221,7 @@ public class Main extends JavaPlugin {
 	/**
 	 * Gets the armor stand from the turret configuration file.
 	 * 
-	 * @param player The name of the player who own the turret.
+	 * @param player The name of the player who owns the turret.
 	 * @param standNumber The number of the stand you want to get.
 	 * @param turretNumber The turret you are getting the stand from.
 	 * @return An armor stand.
@@ -220,5 +241,16 @@ public class Main extends JavaPlugin {
 			}
 		}
 		return stand;
+	}
+	public ArrayList<String> getVillageList(){
+		ArrayList<String> list = new ArrayList<String>();
+		if(this.getVillageListConfig().contains("Villages.")){
+			ConfigurationSection villages = this.getVillageListConfig().getConfigurationSection("Villages.");
+			for(String village: villages.getKeys(false)){
+				list.add(village);
+			}
+		}
+		return list;
+		
 	}
 }
