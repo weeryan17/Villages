@@ -69,6 +69,23 @@ public abstract class PlayerUtil extends Main implements Player {
 		}
 	}
 	/**
+	 * Checks if that player is in any village
+	 * 
+	 * @return if the player is in any village
+	 */
+	public boolean checkInAnyVillage(){
+		boolean inVillage = false;
+		if(this.instance.getVillageListConfig().contains("Villages.")){
+			ConfigurationSection villages = this.instance.getVillageListConfig().getConfigurationSection("Villages.");
+			for(String village : villages.getKeys(false)){
+				if(this.checkInVillage(village)){
+					inVillage = true;
+				}
+			}
+		}
+		return inVillage;
+	}
+	/**
 	 * Gets the village the player is in.
 	 * 
 	 * @return The village the player is in.
@@ -95,9 +112,18 @@ public abstract class PlayerUtil extends Main implements Player {
 	 * @return A boolean of of weather or not the player has that sub permission.
 	 */
 	public boolean hasSubPermission(String subPermission){
-		//String rank = this.getRank();
-		
-		return false;
+		String rank = this.getRank();
+		if(rank != null){
+			@SuppressWarnings("unchecked")
+			ArrayList<String> list = (ArrayList<String>) this.instance.getVillagePermissionData(this.getVillage()).get("Rank." + rank);
+			if(list.contains(subPermission)){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 	/**
 	 * Gets the current village rank of the player.
