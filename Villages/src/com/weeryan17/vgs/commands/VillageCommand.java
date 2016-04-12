@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.weeryan17.vgs.Main;
 import com.weeryan17.vgs.GUIMannagemnt.Books;
+import com.weeryan17.vgs.util.CreateVillage;
 import com.weeryan17.vgs.util.PlayerUtil;
 /**
  * This is the main command and the base for all other commands.
@@ -60,6 +61,12 @@ public class VillageCommand implements CommandExecutor {
 					PlayerUtil player = (PlayerUtil) sender;
 					Books book = new Books(this.instance);
 					book.givePermisionBook(player, args[1]);
+				}
+			}
+			case "new": {
+				if(sender instanceof Player){
+					CreateVillage create = new CreateVillage(null, (Player)sender);
+					create.village();
 				}
 			}
 			}

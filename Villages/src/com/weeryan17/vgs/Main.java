@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
 		VillageCommand mainCommand = new VillageCommand(plugin);
 		TurretPlacer turret = new TurretPlacer(plugin);
 		Events events = new Events(plugin);
-		ProtectionEvents protection = new ProtectionEvents();
+		ProtectionEvents protection = new ProtectionEvents(plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(turret, plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(events, plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(protection, plugin);
